@@ -13,6 +13,8 @@ You should be able to install this plugin to your virtualenv with a simple pip c
 
 By default, only members of the `ADMIN_GROUP` will have access to the baddie list, you should add a list of **group names** to your settings.
 
+You will also need a corporation key for each corporations you want to appear with the MemberList permission. Add these keys to the `EVE['keys']` configuration key as a tuple of (key_id, vcode).
+
 ## License
 
 The MIT License (MIT)
