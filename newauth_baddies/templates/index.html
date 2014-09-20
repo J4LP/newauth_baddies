@@ -34,6 +34,7 @@
                     </div>
                 </div>
             </div>
+            {% if corporation_name %}
             <table class="table">
                 <thead>
                     <tr>
@@ -47,11 +48,12 @@
                         <tr>
                             <td>{{ baddie.name }}</td>
                             <td>{{ corporation_name }}</td>
-                            <td>{{ baddie.startDateTime}}</td>
+                            <td>{{ baddie.startDateTime }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            {% endif %}
         </div>
     </div>
 </div>
