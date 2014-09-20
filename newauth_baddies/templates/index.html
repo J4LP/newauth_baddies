@@ -1,0 +1,67 @@
+{% extends "_layouts/base.html" %}
+
+{% import 'macros.html' as macros %}
+
+{% block title %}Baddies | {{ config.EVE.auth_name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1><i class="fa fa-fw fa-ban"></i> Baddies</h1>
+        <hr/>
+    </div>
+    <div class="col-md-12">
+        <div class="panel panel-turquoise">
+            <div class="panel-body">
+                This page will display members of corporations and alliances not present in NewAuth. Please search for a contact:
+                <hr/>
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <form class="form-horizontal" action="#">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label for="corporation_id">Corporation Search</label>
+                                    <select class="form-control" name="corporation_id" id="corporation_id" placeholder="Find a corporation..."></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button type="submit" class="btn btn-block btn-primary"><i class="fa fa-search fa-fw"></i> Find baddies</button>
+                                </div>
+                            </div>
+                        </form>
+                        If the corporation you're looking for does not appear, please add a corporation key with the "MemberTracking" permission to the settings.
+                    </div>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Character Name</th>
+                        <th>Corporation</th>
+                        <th>Joined on</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for baddie in baddies %}
+                        <tr>
+                            <td>{{ baddie.name }}</td>
+                            <td>{{ corporation_name }}</td>
+                            <td>{{ baddie.startDateTime}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+        $('select#corporation_id').selectize({
+            options: {{corporations|tojson()}},
+            labelField: 'name',
+            searchField: ['name']
+        })
+    })
+</script>
+{% endblock %}
