@@ -51,10 +51,20 @@ class Baddies(object):
             corporation_name = None
             for key in current_app.config['EVE']['keys']:
                 api = EveAPIQuery(key_id=key[0], vcode=key[1])
-                api_info = api.get('account/APIKeyInfo')
+                try:
+                    api_info = api.get('account/APIKeyInfo')
+                except Exception as e:
+                    current_app.logger.exception(e)
+                    flash('We could not get information from the key #{}.'.format(key[0]), 'danger')
+                    break
                 corporations.append({'value': api_info['characters']['row'][0]['corporationID'], 'name': api_info['characters']['row'][0]['corporationName']})
                 if request.args.get('corporation_id') == str(api_info['characters']['row'][0]['corporationID']):
-                    members = api.get('corp/MemberTracking')['row']
+                    try:
+                        members = api.get('corp/MemberTracking')['row']
+                    except Exception as e:
+                        current_app.logger.exception(e)
+                        flash('We could not get information from the key #{}'.format(key[0]), 'danger')
+                        break
                     characters = set([c.characterID for c in members])
                     characters_db = set([c.id for c in Character.query.filter_by(corporation_id=api_info['characters']['row'][0]['corporationID'])])
                     diff = characters.difference(characters_db)
