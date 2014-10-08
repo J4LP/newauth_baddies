@@ -44,6 +44,9 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        <td colspan="3">{{ baddies|length }} baddies found.</td>
+                    </tr>
                     {% for baddie in baddies %}
                         <tr>
                             <td>{{ baddie.name }}</td>
